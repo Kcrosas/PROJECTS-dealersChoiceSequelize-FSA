@@ -49,10 +49,47 @@ const html = `
         <link rel="stylesheet" href="/style.css" />
     </head> 
     <body>
-        <h1>This is the products.js html page</h1> 
-        <img src="${productsData[0].images}">
-    </body> 
+      <header>
+        <nav>
+            <div class="menu">
+            <a href="/">[Products]</a>
+            </div>
+            <div class="menu"> 
+            <h1>The Kawasaki Motors Club</h1>
+            </div>
+            <div class="menu">
+            <a href="/about">About Us</a>
+            </div>
+        </nav>
+        <div id="banner"> 
+        <img id="banner-image" src="/banner.jpg"> 
+        </div>
+  </header>
+  <div class="product-list">
+        ${productsData
+          .map(
+            (item) => `
+          
+            <div class="item">
+                
+                <div><img class="product-image" src="${item.images}">
+                </div>
+                <div class="right-column">
+                  <div class="product-title"><h2>${item.title}</h2></div> 
+                  <div>${item.about}</div> 
+                  <div class="link"><a href="#">See more</a></div>
+                </div>
+          </div>`
+          )
+          .join("")}
+      </div>
+    
+    
+    
+    
+    
+        </body> 
 </html>
 `;
 
-module.exports = { html: html, productsData: productsData };
+module.exports = { html: html };

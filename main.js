@@ -6,7 +6,6 @@ const html = require("html-template-tag");
 const app = express();
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
-
 //'require' custom modules
 const products = require("./products");
 const about = require("./about");
@@ -25,13 +24,12 @@ app.get("/products/:id", (req, res) => {
     res.send("This is the product specific page");
   } else res.send(404);
 });
-//Establish about route
 
+//Establish about route
 app.get("/about", (req, res) => {
   res.send(about.html);
 });
 
 //Establish port access
-
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Port is set to: ${PORT}`));
