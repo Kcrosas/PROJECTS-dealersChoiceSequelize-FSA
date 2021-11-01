@@ -18,3 +18,12 @@ It consist of three pages that utilizes Node.js and Express.
 4. Second page will pull up the detail of whichever motorcycle a user clicks on
 5. Third page will either be an 'About' or a 'Contact'
 6. If third page is a contact page, I will for now have the user's input relayed as an alert until I determine a method of pushing it out to their default email application
+
+## Changes to Plan
+
+1. HTML modules reduced to two
+
+## Image source
+
+1. Banner image from unknown wallpaper site
+2. Motorcycle images are all from ebay

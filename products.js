@@ -69,11 +69,8 @@ const html = `
         ${productsData
           .map(
             (item) => `
-          
-            <div class="item">
-                
-                <div><img class="product-image" src="${item.images}">
-                </div>
+          <div class="item">
+                <div><img class="product-image" src="${item.images}"></div>
                 <div class="right-column">
                   <div class="product-title"><h2>${item.title}</h2></div> 
                   <div>${item.about}</div> 
@@ -82,13 +79,8 @@ const html = `
           </div>`
           )
           .join("")}
-      </div>
-    
-    
-    
-    
-    
-        </body> 
+  </div>
+    </body> 
 </html>
 `;
 
