@@ -22,6 +22,8 @@ It consist of three pages that utilizes Node.js and Express.
 ## Changes to Plan
 
 1. HTML modules reduced to two
+2. Product specific page's html may be kept in main.js depending on html length and findings
+3. Due to time constraints, third page will be an about page
 
 ## Image source
 
