@@ -71,11 +71,9 @@ const html = `
             (item) => `
           <div class="item">
                 <div><img class="product-image" src="${item.images}"></div>
-                <div class="right-column">
                   <div class="product-title"><h2>${item.title}</h2></div> 
-                  <div>${item.about}</div> 
-                  <div class="link"><a href="#">See more</a></div>
-                </div>
+                   
+                  <div class="link"><a href="/products/${item.id}">Product Details</a></div>
           </div>`
           )
           .join("")}
@@ -84,4 +82,33 @@ const html = `
 </html>
 `;
 
-module.exports = { html: html };
+const error = `
+<html>
+    <head>
+        <link rel="stylesheet" href="/style.css" />
+    </head> 
+    <body>
+      <header>
+        <nav>
+            <div class="menu">
+            <a href="/">[Products]</a>
+            </div>
+            <div class="menu"> 
+            <h1>The Kawasaki Motors Club</h1>
+            </div>
+            <div class="menu">
+            <a href="/about">About Us</a>
+            </div>
+        </nav>
+        <div id="banner"> 
+        <img id="banner-image" src="/banner.jpg"> 
+        </div>
+  </header>
+  <div class="product-list">
+      <p> Error: Product not found </p> 
+  </div>
+    </body> 
+</html>
+`;
+
+module.exports = { html: html, data: productsData, error: error };

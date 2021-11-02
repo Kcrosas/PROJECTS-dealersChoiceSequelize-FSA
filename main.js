@@ -18,11 +18,16 @@ app.get("/", (req, res) => {
 
 //Establish product specific route
 app.get("/products/:id", (req, res) => {
-  //Grabs product id through use of externalModule.find(req.params.id)
-
-  if (motorcycle.id) {
-    res.send("This is the product specific page");
-  } else res.send(404);
+  //grabs the data element that holds the link's id which matches to the corresponding product id
+  if (!products.data[req.params["id"]]) {
+    res.send(`${products.error}`);
+  } else {
+    const identifier = Object.values(products.data[req.params["id"]]);
+    const aboutBike = identifier[2];
+    const titleBike = identifier[1];
+    const imageBike = identifier[3];
+    res.send(`${aboutBike}`);
+  }
 });
 
 //Establish about route
