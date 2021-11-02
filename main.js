@@ -26,7 +26,33 @@ app.get("/products/:id", (req, res) => {
     const aboutBike = identifier[2];
     const titleBike = identifier[1];
     const imageBike = identifier[3];
-    res.send(`${aboutBike}`);
+    res.send(`<html>
+    <head>
+        <link rel="stylesheet" href="/style.css" />
+    </head> 
+    <body>
+      <header>
+        <nav>
+            <div class="menu">
+            <a href="/">[Products]</a>
+            </div>
+            <div class="menu"> 
+            <h1>The Kawasaki Motors Club</h1>
+            </div>
+            <div class="menu">
+            <a href="/about">About Us</a>
+            </div>
+        </nav>
+        <div id="banner"> 
+        <img id="banner-image" src="/banner.jpg"> 
+        </div>
+    </header>
+    <div class="product-list">
+      <p> ${aboutBike} </p> 
+      <p> <img src="${imageBike}">
+    </div>
+    </body> 
+    </html>`);
   }
 });
 
