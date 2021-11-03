@@ -30,7 +30,7 @@ app.get("/products/:id", (req, res) => {
     <head>
         <link rel="stylesheet" href="/style.css" />
     </head> 
-    <body>
+    <body id="specifics">
       <header>
         <nav>
             <div class="menu">
@@ -47,9 +47,9 @@ app.get("/products/:id", (req, res) => {
         <img id="banner-image" src="/banner.jpg"> 
         </div>
     </header>
-    <div class="product-list">
-      <p> ${aboutBike} </p> 
-      <p> <img src="${imageBike}">
+    <div class="product-list-specific">
+      <div> ${aboutBike} <div>
+      <div> <img id="exactbike" src="${imageBike}"> </div> 
     </div>
     </body> 
     </html>`);

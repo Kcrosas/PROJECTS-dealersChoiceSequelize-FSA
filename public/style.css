@@ -2,7 +2,8 @@
   box-sizing: border-box;
 }
 
-h2 {
+h2,
+h3 {
   color: #32cd32;
   text-align: center;
 }
@@ -37,7 +38,11 @@ nav a {
   max-width: 100%;
   border-radius: 0 0 3rem 3rem;
   border-bottom: 10px solid #32cd32;
-  border-top: 10px solid #32cd32;
+  border-top: 10px solid#32cd32;
+}
+
+#exactbike {
+  border-radius: 1rem;
 }
 .product-list {
   margin-left: 15px;
@@ -45,6 +50,18 @@ nav a {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+.product-list-specific {
+  margin: 30px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+
+  justify-content: center;
+}
+.product-list-specific div {
+  flex: 1;
+  margin: 15px;
 }
 
 .item {

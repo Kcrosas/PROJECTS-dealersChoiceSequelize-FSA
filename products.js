@@ -71,7 +71,7 @@ const html = `
             (item) => `
           <div class="item">
                 <div><img class="product-image" src="${item.images}"></div>
-                  <div class="product-title"><h2>${item.title}</h2></div> 
+                  <div class="product-title"><h3>${item.title}</h3></div> 
                    
                   <div class="link"><a href="/products/${item.id}">Product Details</a></div>
           </div>`
