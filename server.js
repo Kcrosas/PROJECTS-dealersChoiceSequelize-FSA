@@ -4,39 +4,52 @@ const path = require("path");
 const { syncAndSeed, client } = require("./db");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
+const about = require("./about");
 
 app.get("/", async (req, res, next) => {
   const products = getMotos();
   res.send(`
   <html>
-  <head> 
-  </head>
-  <body><ul> 
+  <head>
+      <link rel="stylesheet" href="/style.css" />
+  </head> 
+  <body>
+    <header>
+      <nav>
+          <div class="menu">
+          <a href="/">[Products]</a>
+          </div>
+          <div class="menu"> 
+          <h1>The Kawasaki Motors Club</h1>
+          </div>
+          <div class="menu">
+          <a href="/about">About Us</a>
+          </div>
+      </nav>
+      <div id="banner"> 
+      <img id="banner-image" src="/banner.jpg"> 
+      </div>
+</header>
+<div class="product-list">
   ${(await products)
     .map(
       (ele, idx, arr) => `
- Name: ${arr[idx].title}<br>
- More details: <a href ="/products/${arr[idx].id}">Click here</a> <br>
- About: ${arr[idx].about}<br>
- <img src="${arr[idx].image}"><br> 
-
-
-  `
+      <div class="item">
+      <div><img class="product-image" src="${arr[idx].image}"></div> 
+      <div class="product-title"><h3>${arr[idx].title}</h3></div> 
+      <div class='link'><a href="/products/${arr[idx].id}">Product Details</a><div>
+      </div>`
     )
     .join("")}
-  </body></ul> 
-  </html>
+    </div>
+    </body> 
+</html>
   
   
   `);
 });
 
 app.get("/products/:id", async (req, res) => {
-  //grabs the data element that holds the link's id which matches to the corresponding product id
-  //if (!products.data[req.params["id"]]) {
-  //res.send(`${products.error}`);
-  //const identifier = Object.values(products.data[req.params["id"]]);
-
   const products = await getMotos();
   const bike = products[req.params.id];
   console.log(products);
@@ -67,6 +80,11 @@ app.get("/products/:id", async (req, res) => {
       </div>
       </body> 
       </html>`);
+});
+
+//Establish about route
+app.get("/about", (req, res) => {
+  res.send(about.html);
 });
 
 //Retrieve table

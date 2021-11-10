@@ -8,7 +8,6 @@ app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
 //'require' custom modules
 const products = require("./products");
-const about = require("./about");
 
 //Establish main route
 app.get("/", (req, res) => {
