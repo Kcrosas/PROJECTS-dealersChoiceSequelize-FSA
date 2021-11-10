@@ -1,29 +1,21 @@
 # Dealer's Choice
 
-## Homework due 11/03/21
+## Homework due 11/10/21
 
 ### Kenneth Rosas - Junior Phase - Cohort 2110
 
-This is my version of Dealer's Choice. It was built with my past hobby of motorcycle riding in mind.
-
-Feel free to clone this repo for evaluation purposes.
-
-It consist of three pages that utilizes Node.js and Express.
+This is a Postgres refactored version of the previous homework "Dealer's Choice"
 
 ## Plan
 
-1. Create a main js file that pulls in three different HTML modules
-2. Determine the appropriate method of pulling images into the pages
-3. First page will list all motorcycles for sale
-4. Second page will pull up the detail of whichever motorcycle a user clicks on
-5. Third page will either be an 'About' or a 'Contact'
-6. If third page is a contact page, I will for now have the user's input relayed as an alert until I determine a method of pushing it out to their default email application
+1. Disconnect/Stop use of products.js (especially the data in the predefined array) and create/pull data from postgres database
+2. Restyle refactored code back to original website style
+3. Restructure file tree to something more manageable
 
 ## Changes to Plan
 
-1. HTML modules reduced to two
-2. Product specific page's html may be kept in main.js depending on html length and findings
-3. Due to time constraints, third page will be an about page
+1. HW goal met: PG refactor is complete but style is limited on product page.
+2. Will continue to work on this when time is available to restyle and restructure files
 
 ## Image source
 
