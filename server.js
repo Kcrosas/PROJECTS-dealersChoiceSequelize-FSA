@@ -37,7 +37,9 @@ app.get("/", async (req, res, next) => {
       <div class="item">
       <div><img class="product-image" src="${arr[idx].image}"></div> 
       <div class="product-title"><h3>${arr[idx].title}</h3></div> 
-      <div class='link'><a href="/products/${arr[idx].id}">Product Details</a><div>
+      <div class='link'><a href="/products/${
+        arr[idx].id - 1
+      }">Product Details</a></div>
       </div>`
     )
     .join("")}
