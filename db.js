@@ -43,7 +43,13 @@ const Customer = conn.define("customer", {
 });
 
 //Defining table relations
-Motorcycles.belongsToMany(Customer, { through: "selected" });
+
+//Many to many with use of belongsToMany, resulted in two tables created.
+//Not sure how to navi it
+Motorcycles.belongsToMany(Customer, {
+  through: "purchased",
+  foreignkey: "bike",
+});
 Customer.belongsToMany(Motorcycles, { through: "buyers" });
 
 //Initial seeder

@@ -11,48 +11,44 @@ app.use(express.urlencoded({ extended: false }));
 const about = require("./about");
 
 app.get("/", async (req, res, next) => {
-  const products = getMotos();
-  res.send(`
-  <html>
-  <head>
-      <link rel="stylesheet" href="/style.css" />
-  </head> 
-  <body>
-    <header>
-      <nav>
-          <div class="menu">
-          <a href="/">[Products]</a>
-          </div>
-          <div class="menu"> 
-          <h1>The Kawasaki Motors Club</h1>
-          </div>
-          <div class="menu">
-          <a href="/about">About Us</a>
-          </div>
-      </nav>
-      <div id="banner"> 
-      <img id="banner-image" src="/banner.jpg"> 
-      </div>
-</header>
-<div class="product-list">
-  ${(await products)
-    .map(
-      (ele, idx, arr) => `
-      <div class="item">
-      <div><img class="product-image" src="${arr[idx].image}"></div> 
-      <div class="product-title"><h3>${arr[idx].title}</h3></div> 
-      <div class='link'><a href="/products/${
-        arr[idx].id - 1
-      }">Product Details</a></div>
-      </div>`
-    )
-    .join("")}
-    </div>
-    </body> 
-</html>
-  
-  
-  `);
+  try {
+    const motos = await Motorcycles.findAll();
+    res.send(`
+    <html>
+    <head>
+        <link rel="stylesheet" href="/style.css" />
+    </head> 
+    <body>
+      <header>
+        <nav>
+            <div class="menu">
+            <a href="/">[Products]</a>
+            </div>
+            <div class="menu"> 
+            <h1>The Kawasaki Motors Club</h1>
+            </div>
+            <div class="menu">
+            <a href="/about">About Us</a>
+            </div>
+        </nav>
+        <div id="banner"> 
+        <img id="banner-image" src="/banner.jpg"> 
+        </div>
+  </header>
+  <div class="product-list">
+    ${motos
+      .map(
+        (e) => `<div class="item">
+    <div><img class="product-image" src="${e.image}"></div> 
+    <div class="product-title"><h3>${e.title}</h3></div> 
+    <div class='link'><a href="/products/${e.id - 1}">Product Details</a></div>
+    </div>`
+      )
+      .join("")}</div></body></html>
+    `);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.get("/products/:id", async (req, res) => {
@@ -93,10 +89,6 @@ app.get("/about", (req, res) => {
   res.send(about.html);
 });
 
-//Retrieve table
-const getMotos = async () =>
-  (await client.query("SELECT * FROM products")).rows;
-
 const bootup = async () => {
   try {
     await syncAndSeed();
@@ -105,9 +97,6 @@ const bootup = async () => {
       Customer.create({ name: "moe", memberDate: "2020-12-02" }),
       Customer.create({ name: "lucy", memberDate: "2020-12-04" }),
       Customer.create({ name: "larry", memberDate: "2020-12-03" }),
-      //Bring in array from first version of homework
-      //Motorcycles.create({}),
-      //Testing a array method to quick pool motorcycle table
       productsData.forEach((e) => {
         Motorcycles.create({
           title: e.title,
@@ -116,6 +105,7 @@ const bootup = async () => {
         });
       }),
     ]);
+
     const port = process.env.PORT || 3000;
     app.listen(port, () => console.log(`Listening on ${port}`));
   } catch (error) {
