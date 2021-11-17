@@ -1,13 +1,19 @@
+//Bringing standard dependencies
 const express = require("express");
-const productsData = require("./productAPI");
 const app = express();
 const path = require("path");
+//Bringing in products data array for initial table pooling
+const productsData = require("./productAPI");
+//Bringing in syncAndSeed and models
 const {
   syncAndSeed,
   models: { Motorcycles, Customer },
 } = require("./db");
+//Creating a view into public (for use with images and css)
 app.use(express.static(path.join(__dirname, "public")));
+//Middleware to "recognize request object as a string or object"
 app.use(express.urlencoded({ extended: false }));
+//Brings in a variable that's storing an HTML code for the about path
 const about = require("./about");
 
 app.get("/", async (req, res, next) => {
@@ -22,7 +28,7 @@ app.get("/", async (req, res, next) => {
       <header>
         <nav>
             <div class="menu">
-            <a href="/">[Products]</a>
+            <a href="/">[Products]</a> || <a href="/buyers">[Buyers]</a>||<a href="/motorcycles">Purchased</a>
             </div>
             <div class="menu"> 
             <h1>The Kawasaki Motors Club</h1>
@@ -51,6 +57,12 @@ app.get("/", async (req, res, next) => {
   }
 });
 
+//This does not work...
+app.get("/products/:id", async (req, res) => {
+  res.send(``);
+});
+
+//This lists all buyers and shows who is a cosigner to whom as well as any customer and their corresponding benefactors
 app.get("/buyers", async (req, res) => {
   //const bike = products[req.params.id];
   try {
@@ -67,6 +79,7 @@ app.get("/buyers", async (req, res) => {
   }
 });
 
+//This lists all motorcycles and their correspondning buyers
 app.get("/motorcycles", async (req, res) => {
   //const bike = products[req.params.id];
   try {
@@ -84,8 +97,7 @@ app.get("/about", (req, res) => {
 const bootup = async () => {
   try {
     await syncAndSeed();
-
-    const [moe, lucy, larry] = await Promise.all([
+    await Promise.all([
       //Note: dateOnly takes a string in the format "YYYY-MM-DD"
       Customer.create({ name: "moe", memberDate: "2020-12-02" }),
       Customer.create({ name: "lucy", memberDate: "2020-12-04" }),
@@ -97,24 +109,24 @@ const bootup = async () => {
           image: e.images,
         });
       }),
+      Motorcycles.update(
+        { buyerId: moe.id },
+        { where: { title: "Kawasaki Ninja 300" } }
+      ),
+      Motorcycles.update(
+        { buyerId: moe.id },
+        { where: { title: "Kawasaki Ninja 250" } }
+      ),
+      Motorcycles.update(
+        { buyerId: larry.id },
+        { where: { title: "Kawasaki Ninja 650" } }
+      ),
+      Motorcycles.update(
+        { buyerId: lucy.id },
+        { where: { title: "Kawasaki Ninja ZX6R" } }
+      ),
+      Customer.update({ cosignerId: lucy.id }, { where: { name: "moe" } }),
     ]);
-    await Motorcycles.update(
-      { buyerId: moe.id },
-      { where: { title: "Kawasaki Ninja 300" } }
-    );
-    await Motorcycles.update(
-      { buyerId: moe.id },
-      { where: { title: "Kawasaki Ninja 250" } }
-    );
-    await Motorcycles.update(
-      { buyerId: larry.id },
-      { where: { title: "Kawasaki Ninja 650" } }
-    );
-    await Motorcycles.update(
-      { buyerId: lucy.id },
-      { where: { title: "Kawasaki Ninja ZX6R" } }
-    );
-    await Customer.update({ cosignerId: lucy.id }, { where: { name: "moe" } });
 
     const port = process.env.PORT || 3000;
     app.listen(port, () => console.log(`Listening on ${port}`));

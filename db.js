@@ -1,7 +1,5 @@
-//Bringing in sequelize
-const { DATE } = require("sequelize");
+//Bringing in sequelize, some datatypes, and a data method
 const Sequelize = require("sequelize");
-//Pulling out data type and data method
 const { STRING, UUID, UUIDV4, INTEGER, DATEONLY } = Sequelize;
 //Establishing db connection and constructor
 const conn = new Sequelize(
@@ -21,6 +19,7 @@ const Motorcycles = conn.define("motorcycle", {
   about: {
     type: STRING(1000),
   },
+  //This will hold the address of the motorcycle images
   image: {
     type: STRING(100),
   },
@@ -44,11 +43,13 @@ const Customer = conn.define("customer", {
 
 //Defining table relations
 
-//Many to many with use of belongsToMany, resulted in two tables created.
-//Not sure how to navi it
+//A motorcycle has one buyer
 Motorcycles.belongsTo(Customer, { as: "buyer" });
+//A customer can buy multiple motorcycles
 Customer.hasMany(Motorcycles, { foreignKey: "buyer" });
+//A customer can be cosigner to another customer
 Customer.belongsTo(Customer, { as: "cosigner" });
+//A customer can cosign multiple customers
 Customer.hasMany(Customer, { foreignKey: "cosignerId", as: "benefactor" });
 
 //Initial seeder
