@@ -43,6 +43,8 @@ const Customer = conn.define("customer", {
 });
 
 //Defining table relations
+Motorcycles.belongsToMany(Customer, { through: "selected" });
+Customer.belongsToMany(Motorcycles, { through: "buyers" });
 
 //Initial seeder
 const syncAndSeed = async () => {

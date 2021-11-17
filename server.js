@@ -1,7 +1,10 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const { syncAndSeed, client } = require("./db");
+const {
+  syncAndSeed,
+  models: { Motorcycles, Customer },
+} = require("./db");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
 const about = require("./about");
@@ -96,6 +99,12 @@ const getMotos = async () =>
 const bootup = async () => {
   try {
     await syncAndSeed();
+    const [moe, lucy, larry] = await Promise.all([
+      //Note: dateOnly takes a string in the format "YYYY-MM-DD"
+      Customer.create({ name: "moe", memberDate: "2020-12-02" }),
+      Customer.create({ name: "lucy", memberDate: "2020-12-04" }),
+      Customer.create({ name: "larry", memberDate: "2020-12-03" }),
+    ]);
     const port = process.env.PORT || 3000;
     app.listen(port, () => console.log(`Listening on ${port}`));
   } catch (error) {
