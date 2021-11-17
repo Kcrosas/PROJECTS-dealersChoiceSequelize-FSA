@@ -95,7 +95,6 @@ const getMotos = async () =>
 
 const bootup = async () => {
   try {
-    await client.connect();
     await syncAndSeed();
     const port = process.env.PORT || 3000;
     app.listen(port, () => console.log(`Listening on ${port}`));
