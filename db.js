@@ -1,7 +1,8 @@
 //Bringing in sequelize
+const { DATE } = require("sequelize");
 const Sequelize = require("sequelize");
 //Pulling out data type and data method
-const { STRING, UUID, UUIDV4, INTEGER } = Sequelize;
+const { STRING, UUID, UUIDV4, INTEGER, DATEONLY } = Sequelize;
 //Establishing db connection and constructor
 const conn = new Sequelize(
   process.env.DATABASE_URL || "postgres://localhost/motorcycles"
@@ -14,8 +15,14 @@ const Motorcycles = conn.define("motorcycle", {
     autoIncrement: true,
     primaryKey: true,
   },
-  name: {
+  title: {
     type: STRING(20),
+  },
+  about: {
+    type: STRING(1000),
+  },
+  image: {
+    type: STRING(100),
   },
 });
 
@@ -29,7 +36,13 @@ const Customer = conn.define("customer", {
   name: {
     type: STRING(20),
   },
+  memberDate: {
+    //YYYY-MM-DD
+    type: DATEONLY,
+  },
 });
+
+//Defining table relations
 
 //Initial seeder
 const syncAndSeed = async () => {
