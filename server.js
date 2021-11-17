@@ -97,7 +97,8 @@ app.get("/about", (req, res) => {
 const bootup = async () => {
   try {
     await syncAndSeed();
-    await Promise.all([
+
+    const [moe, lucy, larry] = await Promise.all([
       //Note: dateOnly takes a string in the format "YYYY-MM-DD"
       Customer.create({ name: "moe", memberDate: "2020-12-02" }),
       Customer.create({ name: "lucy", memberDate: "2020-12-04" }),
@@ -109,23 +110,28 @@ const bootup = async () => {
           image: e.images,
         });
       }),
+    ]);
+    await Promise.all([
       Motorcycles.update(
         { buyerId: moe.id },
         { where: { title: "Kawasaki Ninja 300" } }
       ),
-      Motorcycles.update(
+      await Motorcycles.update(
         { buyerId: moe.id },
         { where: { title: "Kawasaki Ninja 250" } }
       ),
-      Motorcycles.update(
+      await Motorcycles.update(
         { buyerId: larry.id },
         { where: { title: "Kawasaki Ninja 650" } }
       ),
-      Motorcycles.update(
+      await Motorcycles.update(
         { buyerId: lucy.id },
         { where: { title: "Kawasaki Ninja ZX6R" } }
       ),
-      Customer.update({ cosignerId: lucy.id }, { where: { name: "moe" } }),
+      await Customer.update(
+        { cosignerId: lucy.id },
+        { where: { name: "moe" } }
+      ),
     ]);
 
     const port = process.env.PORT || 3000;
