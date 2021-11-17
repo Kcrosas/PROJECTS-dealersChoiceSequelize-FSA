@@ -46,11 +46,10 @@ const Customer = conn.define("customer", {
 
 //Many to many with use of belongsToMany, resulted in two tables created.
 //Not sure how to navi it
-Motorcycles.belongsToMany(Customer, {
-  through: "purchased",
-  foreignkey: "bike",
-});
-Customer.belongsToMany(Motorcycles, { through: "buyers" });
+Motorcycles.belongsTo(Customer, { as: "buyer" });
+Customer.hasMany(Motorcycles, { foreignKey: "buyer" });
+Customer.belongsTo(Customer, { as: "cosigner" });
+Customer.hasMany(Customer, { foreignKey: "cosignerId", as: "benefactor" });
 
 //Initial seeder
 const syncAndSeed = async () => {
