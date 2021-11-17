@@ -1,4 +1,5 @@
 const express = require("express");
+const productsData = require("./productAPI");
 const app = express();
 const path = require("path");
 const {
@@ -104,6 +105,16 @@ const bootup = async () => {
       Customer.create({ name: "moe", memberDate: "2020-12-02" }),
       Customer.create({ name: "lucy", memberDate: "2020-12-04" }),
       Customer.create({ name: "larry", memberDate: "2020-12-03" }),
+      //Bring in array from first version of homework
+      //Motorcycles.create({}),
+      //Testing a array method to quick pool motorcycle table
+      productsData.forEach((e) => {
+        Motorcycles.create({
+          title: e.title,
+          about: e.about,
+          image: e.images,
+        });
+      }),
     ]);
     const port = process.env.PORT || 3000;
     app.listen(port, () => console.log(`Listening on ${port}`));
